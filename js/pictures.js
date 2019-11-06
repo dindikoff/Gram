@@ -156,6 +156,36 @@ var showBigPicture = function () {
     commentsLoader.classList.add('visually-hidden');
   };
 
-showBigPicture();
+// showBigPicture();
 
 
+// File Upload
+
+var uploadButton = document.querySelector('#upload-file');
+var imageUploadOverlay = document.querySelector('.img-upload__overlay');
+var imageUploadCancel = document.querySelector('.img-upload__cancel');
+
+var uploadButtonHandler = function() {
+    imageUploadOverlay.classList.remove('hidden');
+};
+
+var imageUploadCancelHandler = function() {
+    imageUploadOverlay.classList.add('hidden');
+};
+
+uploadButton.addEventListener('change', function() {
+    uploadButtonHandler();
+    document.addEventListener('keydown', function(evt) {
+        if (evt.keyCode == 27) {
+            imageUploadCancelHandler();
+            console.log("hello");
+        }
+    });
+});
+
+imageUploadCancel.addEventListener('click', imageUploadCancelHandler);
+
+
+
+
+// End File Upload
