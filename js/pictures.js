@@ -28,7 +28,8 @@
             'Отдыхаем...',
             'Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......',
             'Вот это тачка!'
-        ]
+        ],
+        
 
     };
 
@@ -40,6 +41,7 @@ var bigPicture = document.querySelector('.big-picture');
 var commentsList = bigPicture.querySelector('.social__comments');
 var commentCount = bigPicture.querySelector('.social__comment-count');
 var commentsLoader = bigPicture.querySelector('.comments-loader');
+var bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
 
 var getRandomInRange = function(min, max) {
     var rand = min + Math.random() * (max + 1 - min);
@@ -51,6 +53,15 @@ var getRandomInRange = function(min, max) {
 var getRandomElement = function(arr) {
     var randEl = Math.floor(Math.random() * arr.length);
     return arr[randEl];
+}
+
+var generateId = function() {
+    var imageId = [];
+    for (var i = 0; i <= picture.COUNT; i++) {
+        imageId.push(i);
+    }
+
+    return imageId;
 }
 
 var generateRandomComments = function() {
@@ -68,12 +79,13 @@ var generateRandomComments = function() {
 var generatePictures = function() {
     var pictures = [];
 
-    for (var i = 1; i <= picture.COUNT; i++) {
+    for (var i = 1; i <= picture.COUNT ; i++) {
         pictures.push({
             url: 'photos/' + i +'.jpg',
             likes: getRandomInRange(picture.MIN_LIKES, picture.MAX_LIKES),
             comments: generateRandomComments(),
-            description: getRandomElement(picture.DESCRIPTIONS)
+            description: getRandomElement(picture.DESCRIPTIONS),
+            id: generateId()[i]
         });
     }
 
@@ -83,7 +95,8 @@ var generatePictures = function() {
 var createPictures = function (picture) {
 	var pictureElement = pictureTemplate.cloneNode(true);
 
-	pictureElement.querySelector('.picture__img').src = picture.url;
+    pictureElement.querySelector('.picture__img').src = picture.url;
+    pictureElement.querySelector('.picture__img').id = picture.id;
 	pictureElement.querySelector('.picture__likes').textContent = picture.likes;
 	pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
 
@@ -148,12 +161,28 @@ var pictures = generatePictures();
 
 renderPictures(pictures);
 
-var showBigPicture = function () {
+var showBigPicture = function (item) {
 
-    renderBigPicture(pictures[0]);
+    renderBigPicture(pictures[item - 1]);
     bigPicture.classList.remove('hidden');
     commentCount.classList.add('visually-hidden');
     commentsLoader.classList.add('visually-hidden');
   };
 
-// showBigPicture();
+
+picturesList.addEventListener('click', function(evt) {
+    showBigPicture(evt.target.id);
+    document.addEventListener('keydown', function(evt) {
+        if (evt.keyCode === 27) {
+            bigPicture.classList.add('hidden');
+        }
+    });
+});
+
+bigPictureClose.addEventListener('click', function() {
+    bigPicture.classList.add('hidden');
+});
+
+
+
+
