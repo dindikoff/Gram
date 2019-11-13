@@ -4,6 +4,10 @@ var uploadButton = document.querySelector('#upload-file');
 var imageUploadOverlay = document.querySelector('.img-upload__overlay');
 var imageUploadCancel = document.querySelector('.img-upload__cancel');
 
+var scaleControlSmaller = document.querySelector(".scale__control--smaller");
+var scaleControlBigger = document.querySelector(".scale__control--bigger");
+var scaleControlValue  = document.querySelector(".scale__control--value");
+
 var uploadButtonHandler = function() {
     imageUploadOverlay.classList.remove('hidden');
 };
@@ -82,3 +86,19 @@ effectsListQuery.addEventListener('click', function(evt) {
         setFilters(effectList.heat);
     }
 });
+
+var scaleControlSmallerHandler = function() {
+    if (parseInt(scaleControlValue.value) >= 25) {
+        scaleControlValue.value = parseInt(scaleControlValue.value) - 25 + "%";
+    }   
+};
+
+
+var scaleControlBiggerHandler = function() {
+    if (parseInt(scaleControlValue.value) < 100) {
+        scaleControlValue.value = parseInt(scaleControlValue.value) + 25 + "%";
+    }  
+};
+
+scaleControlSmaller.addEventListener("click", scaleControlSmallerHandler);
+scaleControlBigger.addEventListener("click", scaleControlBiggerHandler);
