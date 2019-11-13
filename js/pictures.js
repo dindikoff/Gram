@@ -171,7 +171,11 @@ var showBigPicture = function (item) {
 
 
 picturesList.addEventListener('click', function(evt) {
-    showBigPicture(evt.target.id);
+
+    if (evt.target.id == parseInt(evt.target.id, 10) ) {
+        showBigPicture(evt.target.id);
+    } 
+
     document.addEventListener('keydown', function(evt) {
         if (evt.keyCode === 27) {
             bigPicture.classList.add('hidden');
@@ -182,7 +186,4 @@ picturesList.addEventListener('click', function(evt) {
 bigPictureClose.addEventListener('click', function() {
     bigPicture.classList.add('hidden');
 });
-
-
-
 
