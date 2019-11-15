@@ -55,8 +55,14 @@ var hashCloneHandler = function(array) {
       if (check == false) {
         hashTagInput.setCustomValidity(errorList[2]);
       }
-      
+};
 
+var hashMaxLengthHandler = function(array) {
+    for (var i = 0; i < array.length; i++) {
+       if (array[i].length > 20) {
+        hashTagInput.setCustomValidity(errorList[4]);
+       }
+    }
 };
 
 hashTagInput.addEventListener("input", function(evt) {
@@ -65,6 +71,8 @@ hashTagInput.addEventListener("input", function(evt) {
     hashAloneHandler();
 
     hashCloneHandler(generateValuesHandler());
+
+    hashMaxLengthHandler(generateValuesHandler());
 
 
     
