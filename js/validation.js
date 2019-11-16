@@ -11,6 +11,8 @@ var errorList = [
 
 ];
 
+var MAX_HASHTAGS = 5;
+
 var generateValuesHandler = function() {
     var inputValue = hashTagInput.value;
     var hashtags = inputValue.split(" ");
@@ -71,6 +73,35 @@ var hashMaxLengthHandler = function(array) {
     }
 };
 
+var notSpaceHandler = function(array) {
+    var string = "";
+
+    for (var i = 0; i < array.length; i++) {
+        string = array[i];
+
+        var searchTerm = '#';
+    
+    let pos = 0;
+    while (true) {
+        let foundPos = string.indexOf(searchTerm, pos);
+        if (foundPos == -1) break;
+
+        if (foundPos > 0) {
+            hashTagInput.setCustomValidity(errorList[1]);
+        }
+
+        pos = foundPos + 1; 
+        
+        }   
+    };
+};
+
+var maxNumberHashHandler = function(array) {
+    if (array.length >= MAX_HASHTAGS) {
+        hashTagInput.setCustomValidity(errorList[3]);
+    }
+};
+
 
 
 
@@ -83,6 +114,10 @@ hashTagInput.addEventListener("input", function(evt) {
     hashCloneHandler(generateValuesHandler());
 
     hashMaxLengthHandler(generateValuesHandler());
+
+    notSpaceHandler(generateValuesHandler());
+
+    maxNumberHashHandler(generateValuesHandler());
     
 });
 
