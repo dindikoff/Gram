@@ -2,16 +2,16 @@ var hashTagInput = document.querySelector('.text__hashtags');
 var descriptionArea = document.querySelector('.text__description');
 var submitButton = document.querySelector('.img-upload__submit');
 
-var errorList = [
-    "хеш-тег не может состоять только из одной решётки;",
-    'хэш-теги разделяются пробелами;',
-    'один и тот же хэш-тег не может быть использован дважды;',
-    'нельзя указать больше пяти хэш-тегов;',
-    'максимальная длина одного хэш-тега 20 символов, включая решётку.;',
-
-];
+var errorList = {
+    NOT_HASH: "Хеш-тег не может состоять только из одной решётки.",
+    NOT_SPACE: 'Хэш-теги разделяются пробелами.',
+    HASH_CLONE: 'Один и тот же хэш-тег не может быть использован дважды.',
+    MAX_HASH: 'Нельзя указать больше пяти хэш-тегов.',
+    MAX_LENGTH: 'Максимальная длина одного хэш-тега 20 символов, включая решётку.',
+};
 
 var MAX_HASHTAGS = 5;
+var MAX_HASH_LENGTH = 20;
 
 var generateValuesHandler = function() {
     var inputValue = hashTagInput.value;
@@ -41,7 +41,7 @@ var hashNotImportant = function() {
 var hashAloneHandler = function() {
     for (var i = 0; i < generateValuesHandler().length; i++) {
         if (generateValuesHandler().length == 1 && generateValuesHandler()[0] === '#') {
-            hashTagInput.setCustomValidity(errorList[0]);
+            hashTagInput.setCustomValidity(errorList.NOT_HASH);
         } else {
             hashTagInput.setCustomValidity("");
         }
@@ -61,14 +61,14 @@ var hashCloneHandler = function(array) {
       }
 
       if (check == false) {
-        hashTagInput.setCustomValidity(errorList[2]);
+        hashTagInput.setCustomValidity(errorList.HASH_CLONE);
       }
 };
 
 var hashMaxLengthHandler = function(array) {
     for (var i = 0; i < array.length; i++) {
-       if (array[i].length > 20) {
-        hashTagInput.setCustomValidity(errorList[4]);
+       if (array[i].length > MAX_HASH_LENGTH) {
+        hashTagInput.setCustomValidity(errorList.MAX_LENGTH);
        }
     }
 };
@@ -87,7 +87,7 @@ var notSpaceHandler = function(array) {
         if (foundPos == -1) break;
 
         if (foundPos > 0) {
-            hashTagInput.setCustomValidity(errorList[1]);
+            hashTagInput.setCustomValidity(errorList.NOT_SPACE);
         }
 
         pos = foundPos + 1; 
@@ -98,7 +98,7 @@ var notSpaceHandler = function(array) {
 
 var maxNumberHashHandler = function(array) {
     if (array.length >= MAX_HASHTAGS) {
-        hashTagInput.setCustomValidity(errorList[3]);
+        hashTagInput.setCustomValidity(errorList.MAX_HASH);
     }
 };
 
