@@ -4,6 +4,7 @@ var uploadButton = document.querySelector('#upload-file');
 var imageUploadOverlay = document.querySelector('.img-upload__overlay');
 var imageUploadCancelButton = document.querySelector('.img-upload__cancel');
 var hashTagInput = document.querySelector('.text__hashtags');
+var descriptionArea = document.querySelector('.text__description');
 
 var scaleControlSmaller = document.querySelector(".scale__control--smaller");
 var scaleControlBigger = document.querySelector(".scale__control--bigger");
@@ -53,6 +54,14 @@ hashTagInput.addEventListener('focus', function() {
 });
 
 hashTagInput.addEventListener('blur', function() {
+    document.addEventListener('keydown', onPopupEscPress);
+});
+
+descriptionArea.addEventListener('focus', function() {
+    document.removeEventListener('keydown', onPopupEscPress);
+});
+
+descriptionArea.addEventListener('blur', function() {
     document.addEventListener('keydown', onPopupEscPress);
 });
 
