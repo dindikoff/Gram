@@ -14,7 +14,13 @@ var errorList = [
 var generateValuesHandler = function() {
     var inputValue = hashTagInput.value;
     var hashtags = inputValue.split(" ");
-    return hashtags;
+    var sortedHashTags = [];
+    
+    for (var i = 0; i < hashtags.length; i++) {
+        sortedHashTags.push(hashtags[i].toLowerCase());
+    }
+
+    return sortedHashTags;
 };
 
 var hashNotImportant = function() {
@@ -65,6 +71,10 @@ var hashMaxLengthHandler = function(array) {
     }
 };
 
+
+
+
+
 hashTagInput.addEventListener("input", function(evt) {
     generateValuesHandler();
     
@@ -73,8 +83,6 @@ hashTagInput.addEventListener("input", function(evt) {
     hashCloneHandler(generateValuesHandler());
 
     hashMaxLengthHandler(generateValuesHandler());
-
-
     
 });
 
