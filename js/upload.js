@@ -2,7 +2,8 @@
 
 var uploadButton = document.querySelector('#upload-file');
 var imageUploadOverlay = document.querySelector('.img-upload__overlay');
-var imageUploadCancel = document.querySelector('.img-upload__cancel');
+var imageUploadCancelButton = document.querySelector('.img-upload__cancel');
+var hashTagInput = document.querySelector('.text__hashtags');
 
 var scaleControlSmaller = document.querySelector(".scale__control--smaller");
 var scaleControlBigger = document.querySelector(".scale__control--bigger");
@@ -14,26 +15,46 @@ var effectLevelValue = document.querySelector('.effect-level__value');
 var effectLevelPin = document.querySelector('.effect-level__pin');
 var effectLevelDepth = document.querySelector('.effect-level__depth');
 
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 
-var uploadButtonHandler = function() {
-    imageUploadOverlay.classList.remove('hidden');
+var onPopupEscPress = function(evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+        closePopup();
+    }
 };
 
-var imageUploadCancelHandler = function() {
+var openPopup = function() {
+    imageUploadOverlay.classList.remove('hidden');
+    document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function() {
     imageUploadOverlay.classList.add('hidden');
+    document.removeEventListener('keydown', onPopupEscPress);
 };
 
 uploadButton.addEventListener('change', function() {
-    uploadButtonHandler();
-    document.addEventListener('keydown', function(evt) {
-        if (evt.keyCode == 27) {
-            imageUploadCancelHandler();
-            console.log("hello");
-        }
-    });
+    openPopup();
 });
 
-imageUploadCancel.addEventListener('click', imageUploadCancelHandler);
+uploadButton.addEventListener('keydown', function(evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+        openPopup();
+    }
+});
+
+imageUploadCancelButton.addEventListener('click', function() {
+    closePopup();
+});
+
+hashTagInput.addEventListener('focus', function() {
+    document.removeEventListener('keydown', onPopupEscPress);
+});
+
+hashTagInput.addEventListener('blur', function() {
+    document.addEventListener('keydown', onPopupEscPress);
+});
 
 // Effects
 
