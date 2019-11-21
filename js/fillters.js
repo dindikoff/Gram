@@ -4,9 +4,12 @@ var effectLevelPin = document.querySelector('.effect-level__pin');
 var effectLevelDepth = document.querySelector('.effect-level__depth');
 var effectLevelValue = document.querySelector('.effect-level__value');
 
-var getPixels;
-var MAX_NUMBER = 430;
+var pinPixelPosition;
+var MAX_NUMBER = 450;
+var MIN_NUMBER = 0;
 var MAX_PERCENTAGE = 100;
+
+var DEFAULT_PIN_POSITION_NUMBER = 50;
 
 effectLevelPin.addEventListener('mousedown', function(evt) {
     evt.preventDefault();
@@ -23,16 +26,16 @@ effectLevelPin.addEventListener('mousedown', function(evt) {
         effectLevelPin.style.left = (effectLevelPin.offsetLeft - shift) + 'px';
         effectLevelDepth.style.width = (effectLevelPin.offsetLeft - shift) + 'px';
 
-        getPixels = (effectLevelPin.offsetLeft - shift);
+        pinPixelPosition = (effectLevelPin.offsetLeft - shift);
         effectLevelValue.value = (getPixels / MAX_NUMBER) * MAX_PERCENTAGE;
 
 
-        if (effectLevelPin.offsetLeft >= 450) {
-            effectLevelPin.style.left = 450 + 'px';
+        if (effectLevelPin.offsetLeft >= MAX_NUMBER) {
+            effectLevelPin.style.left = MAX_NUMBER + 'px';
         }
 
-        if (effectLevelPin.offsetLeft < 0) {
-            effectLevelPin.style.left = 0 + 'px';
+        if (effectLevelPin.offsetLeft < MIN_NUMBER) {
+            effectLevelPin.style.left = MIN_NUMBER + 'px';
         }
 
     };
@@ -125,9 +128,9 @@ var getEffectHandler = function(filter) {
 
 var resetEffect = function() {
     imageUploaded.style.filter = "";
-    effectLevelValue.value = 20;
-    effectLevelPin.style.left = 50 + 'px';
-    effectLevelDepth.style.width = 50 + 'px';
+    effectLevelValue.value = DEFAULT_PIN_POSITION_NUMBER;
+    effectLevelPin.style.left = DEFAULT_PIN_POSITION_NUMBER + 'px';
+    effectLevelDepth.style.width = DEFAULT_PIN_POSITION_NUMBER + 'px';
     console.log('hi');
 
 }
