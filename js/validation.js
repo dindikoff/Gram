@@ -1,5 +1,5 @@
 var hashTagInput = document.querySelector('.text__hashtags');
-var descriptionArea = document.querySelector('.text__description');
+
 var submitButton = document.querySelector('.img-upload__submit');
 
 var errorList = {

@@ -1,3 +1,4 @@
+'use strict';
 // File Upload
 
 var uploadButton = document.querySelector('#upload-file');
@@ -12,9 +13,9 @@ var scaleControlValue  = document.querySelector(".scale__control--value");
 var imageArea = document.querySelector('.img-upload__preview');
 
 var effectLevelPanel = document.querySelector('.effect-level');
-var effectLevelValue = document.querySelector('.effect-level__value');
-var effectLevelPin = document.querySelector('.effect-level__pin');
-var effectLevelDepth = document.querySelector('.effect-level__depth');
+
+
+
 
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
@@ -161,77 +162,8 @@ scaleControlSmaller.addEventListener("click", scaleControlSmallerHandler );
 
 scaleControlBigger.addEventListener("click", scaleControlBiggerHandler);
 
-var effectLevel = parseInt(effectLevelValue.value);
+// var effectLevel = parseInt(effectLevelValue.value);
 
-var getEffectHandler = function(filter) {
-    if (filter == 'chrome') {
-        imageUploaded.style = "filter: grayscale(0." + effectLevel + ")";
 
-        if (effectLevel == 100) {
-            imageUploaded.style = "filter: grayscale(1)";
-        }  
-    } 
-    
-    else if (filter == 'sepia') {
-        imageUploaded.style = "filter: sepia(0." + effectLevel + ")";
 
-        if (effectLevel == 100) {
-            imageUploaded.style = "filter: sepia(1)";
-        }  
-    } 
-    
-    else if (filter == 'marvin') {
-        imageUploaded.style = "filter: invert(" + effectLevel + "%)";
-    }
 
-    else if (filter == 'fobos') {
-        if (effectLevel <= 25) {
-            imageUploaded.style = "filter: blur(1px)";
-        } 
-
-        else if (effectLevel <= 50) {
-            imageUploaded.style = "filter: blur(2px)";
-        }
-
-        else if (effectLevel <= 75) {
-            imageUploaded.style = "filter: blur(3px)";
-        }
-
-        else if (effectLevel <= 100) {
-            imageUploaded.style= "filter: blur(4px)";
-        }
-        
-    }
-
-    else if (filter == 'heat') {
-        imageUploaded.style = "filter: brightness(" + effectLevel + "%)";
-    }
-    
-};
-
-var resetEffect = function() {
-    imageUploaded.style.filter = "";
-}
-
-effectLevelPin.addEventListener("mouseup", function() {
-    
-    if (chosenFilter.id == 'effect-chrome') {
-        getEffectHandler("chrome");
-    }
-
-    if (chosenFilter.id == 'effect-sepia'){
-        getEffectHandler("sepia");
-    }
-
-    if (chosenFilter.id == 'effect-marvin'){
-        getEffectHandler("marvin");
-    }
-
-    if (chosenFilter.id == 'effect-phobos'){
-        getEffectHandler("fobos");
-    }
-
-    if (chosenFilter.id == 'effect-heat'){
-        getEffectHandler("heat");
-    } 
-});
