@@ -75,11 +75,17 @@
     }
   });
 
+ 
+
   //Change Effects
 
   var effectLevelPin = document.querySelector('.effect-level__pin');
   var effectLevelDepth = document.querySelector('.effect-level__depth');
   var effectLevelValue = document.querySelector('.effect-level__value');
+
+  window.fillters = {
+    effeLevel: effectLevelValue
+  }
 
   var pinPixelPosition;
   var MAX_NUMBER = 450;
@@ -106,8 +112,8 @@
         'px';
 
       pinPixelPosition = (effectLevelPin.offsetLeft - shift);
-      effectLevelValue.value = (pinPixelPosition / MAX_NUMBER) * MAX_PERCENTAGE;
-
+      effectLevelValue.value = Math.round((pinPixelPosition / MAX_NUMBER) * MAX_PERCENTAGE);
+      
 
       if (effectLevelPin.offsetLeft >= MAX_NUMBER) {
         effectLevelPin.style.left = MAX_NUMBER + 'px';
