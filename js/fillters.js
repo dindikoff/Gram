@@ -29,7 +29,7 @@ effectLevelPin.addEventListener('mousedown', function(evt) {
       'px';
 
     pinPixelPosition = (effectLevelPin.offsetLeft - shift);
-    effectLevelValue.value = (getPixels / MAX_NUMBER) * MAX_PERCENTAGE;
+    effectLevelValue.value = (pinPixelPosition / MAX_NUMBER) * MAX_PERCENTAGE;
 
 
     if (effectLevelPin.offsetLeft >= MAX_NUMBER) {
