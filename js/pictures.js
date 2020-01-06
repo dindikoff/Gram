@@ -107,6 +107,15 @@ const bigPicture = pictureElement => {
 };
 
 bigPicture(imageList[0]); // Show Big Picture with one element;
+
+//Show Big Picture by click
+
+const picturesMain = document.querySelector('.pictures');
+
+picturesMain.addEventListener('change', (e) => {
+  console.log(e.target);
+});
+
 //End Big Picture
 
 // upload menu
@@ -115,10 +124,9 @@ const uploadInput = document.querySelector("#upload-file");
 const imageUploadOverlay = document.querySelector(".img-upload__overlay");
 const closeUploadOverlay = document.querySelector(".img-upload__cancel");
 
-imageUploadOverlay.classList.remove("hidden"); // It should delete!
 
-const closeUploadOverlayByEsc = (evt) => {
-  console.log('hi');
+const closeUploadOverlayByEsc = evt => {
+  console.log("hi");
   if (evt.keyCode == 27) {
     hideUploadOverlay();
   }
@@ -126,14 +134,57 @@ const closeUploadOverlayByEsc = (evt) => {
 
 const showUploadOverlay = () => {
   imageUploadOverlay.classList.remove("hidden");
-  document.addEventListener('keydown', closeUploadOverlayByEsc);
+  document.addEventListener("keydown", closeUploadOverlayByEsc);
 };
 
 const hideUploadOverlay = () => {
   imageUploadOverlay.classList.add("hidden");
-  document.removeEventListener('keydown', closeUploadOverlayByEsc);
+  document.removeEventListener("keydown", closeUploadOverlayByEsc);
 };
 
 uploadInput.addEventListener("change", showUploadOverlay);
-closeUploadOverlay.addEventListener('click', hideUploadOverlay);
+closeUploadOverlay.addEventListener("click", hideUploadOverlay);
 // end upload menu
+
+// Effects
+
+const effectsList = [
+  "effects__preview--chrome",
+  "effects__preview--sepia",
+  "effects__preview--marvin",
+  "effects__preview--phobos",
+  "effects__preview--heat"
+];
+const imageUploadPreview = document.querySelector(".img-upload__preview");
+const filterRadioButtons = document.querySelectorAll(".effects__radio");
+const effectLists = document.querySelector(".effects__list");
+
+const useEffectHandler = () => {
+  if (filterRadioButtons[0].checked) {
+    imageUploadPreview.className = "img-upload__preview";
+  }
+
+  if (filterRadioButtons[1].checked) {
+    imageUploadPreview.className = "img-upload__preview" + " " + effectsList[0];
+  }
+
+  if (filterRadioButtons[2].checked) {
+    imageUploadPreview.className = "img-upload__preview" + " " + effectsList[1];
+  }
+
+  if (filterRadioButtons[3].checked) {
+    imageUploadPreview.className = "img-upload__preview" + " " + effectsList[2];
+  }
+
+  if (filterRadioButtons[4].checked) {
+    imageUploadPreview.className = "img-upload__preview" + " " + effectsList[3];
+  }
+
+  if (filterRadioButtons[5].checked) {
+    imageUploadPreview.className = "img-upload__preview" + " " + effectsList[4];
+  }
+};
+
+effectLists.addEventListener("change", useEffectHandler);
+
+// Effects end
