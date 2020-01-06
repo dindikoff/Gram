@@ -15,6 +15,33 @@ const renderPicture = picture => {
   pictureImageSrc.src = picture.url;
   pictureComments.textContent = picture.comments.length;
   pictureLikes.textContent = picture.likes;
+  pictureImageSrc.id = picture.id;
+
+  const bigPictureEl = document.querySelector(".big-picture");
+  const showBigPictureHandler = evt => {
+    bigPictureEl.classList.remove("hidden"); // Hide big picture
+    bigPicture(imageList[evt.target.id]);
+  };
+
+  const closeOverlayByEsc = (evt) => {
+    if (evt.keyCode === 27) {
+      bigPictureEl.classList.add("hidden"); // Hide big picture
+    }
+  }
+
+  const bigPictureClose = document.querySelector(".big-picture__cancel");
+
+  const hideBitPictureHandle = evt => {
+    bigPictureEl.classList.add("hidden"); // Hide big picture
+  };
+
+  pictureImageSrc.addEventListener("click", (evt) => {
+    showBigPictureHandler(evt);
+    closeOverlayByEsc();
+  });
+
+
+  bigPictureClose.addEventListener("click", hideBitPictureHandle);
 
   return pictureElement;
 };
@@ -24,7 +51,6 @@ const renderPicture = picture => {
 
 const showImages = pictureList => {
   const fragment = document.createDocumentFragment();
-
   for (let i = 0; i < pictureList.length; i++) {
     fragment.appendChild(renderPicture(pictureList[i]));
   }
@@ -39,7 +65,6 @@ showImages(imageList);
 
 const bigPicture = pictureElement => {
   const bigPicture = document.querySelector(".big-picture");
-  // bigPicture.classList.remove("hidden"); // Hide big picture
 
   const socialElement = document.querySelector(".social");
   const bigPictureImage = bigPicture.querySelector(".big-picture__img img");
@@ -110,11 +135,15 @@ bigPicture(imageList[0]); // Show Big Picture with one element;
 
 //Show Big Picture by click
 
-const picturesMain = document.querySelector('.pictures');
+const picturesMain = document.querySelector(".pictures");
 
-picturesMain.addEventListener('change', (e) => {
-  console.log(e.target);
-});
+// picturesMain.addEventListener('click', (e) => {
+//   let a = e.target;
+//   console.log(a);
+//   if (a.id === 'hi') {
+//     alert('hi');
+//   }
+// });
 
 //End Big Picture
 
@@ -123,7 +152,6 @@ picturesMain.addEventListener('change', (e) => {
 const uploadInput = document.querySelector("#upload-file");
 const imageUploadOverlay = document.querySelector(".img-upload__overlay");
 const closeUploadOverlay = document.querySelector(".img-upload__cancel");
-
 
 const closeUploadOverlayByEsc = evt => {
   console.log("hi");
