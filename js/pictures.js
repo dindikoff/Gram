@@ -13,7 +13,7 @@ const renderPicture = picture => {
   const pictureLikes = pictureElement.querySelector(".picture__likes");
 
   pictureImageSrc.src = picture.url;
-  pictureComments.textContent = picture.comments;
+  pictureComments.textContent = picture.comments.length;
   pictureLikes.textContent = picture.likes;
 
   return pictureElement;
@@ -39,7 +39,7 @@ showImages(imageList);
 
 const bigPicture = pictureElement => {
   const bigPicture = document.querySelector(".big-picture");
-  bigPicture.classList.remove("hidden");
+  // bigPicture.classList.remove("hidden"); // Hide big picture
 
   const socialElement = document.querySelector(".social");
   const bigPictureImage = bigPicture.querySelector(".big-picture__img img");
@@ -74,7 +74,6 @@ const bigPicture = pictureElement => {
     );
     bigPictureDownloadComments.classList.add("visually-hidden");
     bigPictureCommentsCount.classList.add("visually-hidden");
-    console.log(bigPictureCommentsCount);
   };
   getBigPictureCommentsCountAndDownload();
 
@@ -107,5 +106,34 @@ const bigPicture = pictureElement => {
   getBigPictureSocialComments();
 };
 
-bigPicture(imageList[0]);
+bigPicture(imageList[0]); // Show Big Picture with one element;
 //End Big Picture
+
+// upload menu
+
+const uploadInput = document.querySelector("#upload-file");
+const imageUploadOverlay = document.querySelector(".img-upload__overlay");
+const closeUploadOverlay = document.querySelector(".img-upload__cancel");
+
+imageUploadOverlay.classList.remove("hidden"); // It should delete!
+
+const closeUploadOverlayByEsc = (evt) => {
+  console.log('hi');
+  if (evt.keyCode == 27) {
+    hideUploadOverlay();
+  }
+};
+
+const showUploadOverlay = () => {
+  imageUploadOverlay.classList.remove("hidden");
+  document.addEventListener('keydown', closeUploadOverlayByEsc);
+};
+
+const hideUploadOverlay = () => {
+  imageUploadOverlay.classList.add("hidden");
+  document.removeEventListener('keydown', closeUploadOverlayByEsc);
+};
+
+uploadInput.addEventListener("change", showUploadOverlay);
+closeUploadOverlay.addEventListener('click', hideUploadOverlay);
+// end upload menu
