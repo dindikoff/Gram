@@ -37,7 +37,7 @@ const imageList = [
     url: 'photos/1.jpg',
     likes: getRandomLikeNumber(15, 200),
     comments: 'Всё отлично!',
-    description: 'Тестим новую камеру!'
+    description: 'Тестим новую камеру!',
   },
   {
     url: 'photos/2.jpg',
@@ -190,3 +190,11 @@ const imageList = [
     description: 'Тестим новую камеру!26'
   },
 ];
+
+const addIdToImages = () => {
+  for (let i = 0; i < imageList.length; i++) {
+    imageList[i].id = i;
+  }
+};
+
+addIdToImages();
