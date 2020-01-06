@@ -17,29 +17,31 @@ const renderPicture = picture => {
   pictureLikes.textContent = picture.likes;
   pictureImageSrc.id = picture.id;
 
+  // Show big picture Handlers
   const bigPictureEl = document.querySelector(".big-picture");
   const showBigPictureHandler = evt => {
-    bigPictureEl.classList.remove("hidden"); // Hide big picture
+    bigPictureEl.classList.remove("hidden"); // Show big picture
     bigPicture(imageList[evt.target.id]);
   };
 
-  const closeOverlayByEsc = (evt) => {
+  const closeOverlayByEsc = evt => {
     if (evt.keyCode === 27) {
-      bigPictureEl.classList.add("hidden"); // Hide big picture
+      console.log("hi");
+      hideBitPictureHandle(); // Close big picture
     }
-  }
+  };
 
   const bigPictureClose = document.querySelector(".big-picture__cancel");
 
   const hideBitPictureHandle = evt => {
-    bigPictureEl.classList.add("hidden"); // Hide big picture
+    bigPictureEl.classList.add("hidden"); // Close big picture
+    document.removeEventListener("keydown", closeOverlayByEsc);
   };
 
-  pictureImageSrc.addEventListener("click", (evt) => {
+  pictureImageSrc.addEventListener("click", evt => {
     showBigPictureHandler(evt);
-    closeOverlayByEsc();
+    document.addEventListener("keydown", closeOverlayByEsc);
   });
-
 
   bigPictureClose.addEventListener("click", hideBitPictureHandle);
 
