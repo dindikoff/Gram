@@ -228,7 +228,7 @@ const hashTagInput = document.querySelector(".text__hashtags");
 
 const hashTagValidation = () => {
 
-  const checkFirstSymbolHandler = () => {
+  const checkFirstSymbol = () => {
     for (let i = 0; i < generateValues().length; i++) {
       if (generateValues()[i][0] !== "#") {
         hashTagInput.setCustomValidity(validationError[0]);
@@ -237,8 +237,24 @@ const hashTagValidation = () => {
       }
     }
   };
+
+  const checkFirstSymbolHandler = () => {
+    checkFirstSymbol();
+  };
+
+   const notOnlyOneHash = () => {
+    for(let i = 0; i < generateValues().length; i++) {
+      if (generateValues()[i].length <= 1 && generateValues()[i] === '#') {
+        hashTagInput.setCustomValidity(validationError[1]);
+      } 
+    }
+   }
+
   hashTagInput.addEventListener("input", evt => {
+    
     checkFirstSymbolHandler();
+    notOnlyOneHash();
+    
   });
 };
 
