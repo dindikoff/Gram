@@ -139,16 +139,6 @@ bigPicture(imageList[0]); // Show Big Picture with one element;
 
 const picturesMain = document.querySelector(".pictures");
 
-// picturesMain.addEventListener('click', (e) => {
-//   let a = e.target;
-//   console.log(a);
-//   if (a.id === 'hi') {
-//     alert('hi');
-//   }
-// });
-
-//End Big Picture
-
 // upload menu
 
 const uploadInput = document.querySelector("#upload-file");
@@ -156,7 +146,6 @@ const imageUploadOverlay = document.querySelector(".img-upload__overlay");
 const closeUploadOverlay = document.querySelector(".img-upload__cancel");
 
 const closeUploadOverlayByEsc = evt => {
-  console.log("hi");
   if (evt.keyCode == 27) {
     hideUploadOverlay();
   }
@@ -218,3 +207,39 @@ const useEffectHandler = () => {
 effectLists.addEventListener("change", useEffectHandler);
 
 // Effects end
+
+// Form Validation
+
+const validationError = [
+  "хэш-тег начинается с символа # (решётка);",
+  "хеш-тег не может состоять только из одной решётки;",
+  "хэш-теги разделяются пробелами;",
+  "один и тот же хэш-тег не может быть использован дважды;",
+  "нельзя указать больше пяти хэш-тегов;",
+  "максимальная длина одного хэш-тега 20 символов, включая решётку.;"
+];
+
+const hashTagInput = document.querySelector(".text__hashtags");
+
+  const generateValues = () => {
+    const userInput = hashTagInput.value.split(" ");
+    return userInput;
+  };
+
+const hashTagValidation = () => {
+
+  const checkFirstSymbolHandler = () => {
+    for (let i = 0; i < generateValues().length; i++) {
+      if (generateValues()[i][0] !== "#") {
+        hashTagInput.setCustomValidity(validationError[0]);
+      } else {
+        hashTagInput.setCustomValidity("");
+      }
+    }
+  };
+  hashTagInput.addEventListener("input", evt => {
+    checkFirstSymbolHandler();
+  });
+};
+
+hashTagValidation();
