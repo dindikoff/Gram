@@ -315,12 +315,25 @@ const hashTagValidation = () => {
     hashTagMaxNumber();
   };
 
+  const hashTagMaxNumberLetter = () => {
+    const data = generateValues();
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].length > 20) {
+        hashTagInput.setCustomValidity(validationError[5]);
+      }
+    }
+  }
+
+  const hashTagMaxNumberLetterHandler = () => {
+    hashTagMaxNumberLetter();
+  }
   hashTagInput.addEventListener("input", evt => {
     checkFirstSymbolHandler();
     notOnlyOneHashHandle();
     hashOnlyFirstHandle();
     hashTagDuplicatesHandler();
     hashTagMaxNumberHandler();
+    hashTagMaxNumberLetterHandler();
   });
 };
 
