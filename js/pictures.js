@@ -251,11 +251,38 @@ const hashTagValidation = () => {
 
   const notOnlyOneHashHandle = () => {
     notOnlyOneHash();
-  }
+  };
+
+  const hashOnlyFirst = () => {
+    let string = "";
+
+    for (let i = 0; i < generateValues().length; i++) {
+      string = generateValues()[i];
+      const searchItem = "#";
+
+      let pos = 0;
+
+      while (true) {
+        let foundPos = string.indexOf(searchItem, pos);
+        if (foundPos == -1) break;
+
+        if (foundPos > 0) {
+          hashTagInput.setCustomValidity(validationError[2]);
+        }
+
+        pos = foundPos + 1;
+      }
+    }
+  };
+
+  const hashOnlyFirstHandle = () => {
+    hashOnlyFirst();
+  };
 
   hashTagInput.addEventListener("input", evt => {
     checkFirstSymbolHandler();
     notOnlyOneHashHandle();
+    hashOnlyFirstHandle();
   });
 };
 
