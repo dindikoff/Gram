@@ -26,7 +26,6 @@ const renderPicture = picture => {
 
   const closeOverlayByEsc = evt => {
     if (evt.keyCode === 27) {
-      console.log("hi");
       hideBitPictureHandle(); // Close big picture
     }
   };
@@ -139,16 +138,6 @@ bigPicture(imageList[0]); // Show Big Picture with one element;
 
 const picturesMain = document.querySelector(".pictures");
 
-// picturesMain.addEventListener('click', (e) => {
-//   let a = e.target;
-//   console.log(a);
-//   if (a.id === 'hi') {
-//     alert('hi');
-//   }
-// });
-
-//End Big Picture
-
 // upload menu
 
 const uploadInput = document.querySelector("#upload-file");
@@ -156,7 +145,6 @@ const imageUploadOverlay = document.querySelector(".img-upload__overlay");
 const closeUploadOverlay = document.querySelector(".img-upload__cancel");
 
 const closeUploadOverlayByEsc = evt => {
-  console.log("hi");
   if (evt.keyCode == 27) {
     hideUploadOverlay();
   }
@@ -168,8 +156,12 @@ const showUploadOverlay = () => {
 };
 
 const hideUploadOverlay = () => {
-  imageUploadOverlay.classList.add("hidden");
-  document.removeEventListener("keydown", closeUploadOverlayByEsc);
+  if (document.activeElement.name === "hashtags" || document.activeElement.name === 'description') {
+    return;
+  } else {
+    imageUploadOverlay.classList.add("hidden");
+    document.removeEventListener("keydown", closeUploadOverlayByEsc);
+  }
 };
 
 uploadInput.addEventListener("change", showUploadOverlay);
@@ -218,3 +210,134 @@ const useEffectHandler = () => {
 effectLists.addEventListener("change", useEffectHandler);
 
 // Effects end
+
+// Form Validation
+
+const validationError = [
+  "хэш-тег начинается с символа # (решётка);",
+  "хеш-тег не может состоять только из одной решётки;",
+  "хэш-теги разделяются пробелами;",
+  "один и тот же хэш-тег не может быть использован дважды;",
+  "нельзя указать больше пяти хэш-тегов;",
+  "максимальная длина одного хэш-тега 20 символов, включая решётку.;"
+];
+
+const hashTagInput = document.querySelector(".text__hashtags");
+
+const generateValues = () => {
+  const userInput = hashTagInput.value.split(" ");
+  return userInput;
+};
+
+const hashTagValidation = () => {
+  const checkFirstSymbol = () => {
+    const data = generateValues();
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][0] !== "#") {
+        hashTagInput.setCustomValidity(validationError[0]);
+      } else {
+        hashTagInput.setCustomValidity("");
+      }
+    }
+  };
+
+  const checkFirstSymbolHandler = () => {
+    checkFirstSymbol();
+  };
+
+  const notOnlyOneHash = () => {
+    const data = generateValues();
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].length <= 1 && data[i] === "#") {
+        hashTagInput.setCustomValidity(validationError[1]);
+      }
+    }
+  };
+
+  const notOnlyOneHashHandle = () => {
+    notOnlyOneHash();
+  };
+
+  const hashOnlyFirst = () => {
+    let string = "";
+    const data = generateValues();
+
+    for (let i = 0; i < data.length; i++) {
+      string = data[i];
+      const searchItem = "#";
+
+      let pos = 0;
+
+      while (true) {
+        let foundPos = string.indexOf(searchItem, pos);
+        if (foundPos == -1) break;
+
+        if (foundPos > 0) {
+          hashTagInput.setCustomValidity(validationError[2]);
+        }
+
+        pos = foundPos + 1;
+      }
+    }
+  };
+
+  const hashOnlyFirstHandle = () => {
+    hashOnlyFirst();
+  };
+
+  const hashTagDuplicates = () => {
+    const data = generateValues();
+    const arr_len = data.length;
+    for (let i = 0; i < arr_len; i++) {
+      let val = data[i];
+      for (let j = i + 1; j < arr_len; j++) {
+        if (val === data[j]) {
+          hashTagInput.setCustomValidity(validationError[3]);
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  const hashTagDuplicatesHandler = () => {
+    hashTagDuplicates();
+  };
+
+  const hashTagMaxNumber = () => {
+    const data = generateValues();
+
+    if (data.length >= 6) {
+      hashTagInput.setCustomValidity(validationError[4]);
+    }
+
+    console.log(generateValues().length);
+  };
+
+  const hashTagMaxNumberHandler = () => {
+    hashTagMaxNumber();
+  };
+
+  const hashTagMaxNumberLetter = () => {
+    const data = generateValues();
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].length > 20) {
+        hashTagInput.setCustomValidity(validationError[5]);
+      }
+    }
+  };
+
+  const hashTagMaxNumberLetterHandler = () => {
+    hashTagMaxNumberLetter();
+  };
+  hashTagInput.addEventListener("input", evt => {
+    checkFirstSymbolHandler();
+    notOnlyOneHashHandle();
+    hashOnlyFirstHandle();
+    hashTagDuplicatesHandler();
+    hashTagMaxNumberHandler();
+    hashTagMaxNumberLetterHandler();
+  });
+};
+
+hashTagValidation();
