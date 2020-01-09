@@ -297,11 +297,30 @@ const hashTagValidation = () => {
     return false;
   };
 
+  const hashTagDuplicatesHandler = () => {
+    hashTagDuplicates();
+  };
+
+  const hashTagMaxNumber = () => {
+    const data = generateValues();
+
+    if (data.length >= 6) {
+      hashTagInput.setCustomValidity(validationError[4]);
+    }
+
+    console.log(generateValues().length);
+  };
+
+  const hashTagMaxNumberHandler = () => {
+    hashTagMaxNumber();
+  };
+
   hashTagInput.addEventListener("input", evt => {
     checkFirstSymbolHandler();
     notOnlyOneHashHandle();
     hashOnlyFirstHandle();
-    hashTagDuplicates();
+    hashTagDuplicatesHandler();
+    hashTagMaxNumberHandler();
   });
 };
 
