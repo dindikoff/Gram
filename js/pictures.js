@@ -228,8 +228,9 @@ const generateValues = () => {
 
 const hashTagValidation = () => {
   const checkFirstSymbol = () => {
-    for (let i = 0; i < generateValues().length; i++) {
-      if (generateValues()[i][0] !== "#") {
+    const data = generateValues();
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][0] !== "#") {
         hashTagInput.setCustomValidity(validationError[0]);
       } else {
         hashTagInput.setCustomValidity("");
@@ -242,8 +243,9 @@ const hashTagValidation = () => {
   };
 
   const notOnlyOneHash = () => {
-    for (let i = 0; i < generateValues().length; i++) {
-      if (generateValues()[i].length <= 1 && generateValues()[i] === "#") {
+    const data = generateValues();
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].length <= 1 && data[i] === "#") {
         hashTagInput.setCustomValidity(validationError[1]);
       }
     }
@@ -255,9 +257,10 @@ const hashTagValidation = () => {
 
   const hashOnlyFirst = () => {
     let string = "";
+    const data = generateValues();
 
-    for (let i = 0; i < generateValues().length; i++) {
-      string = generateValues()[i];
+    for (let i = 0; i < data.length; i++) {
+      string = data[i];
       const searchItem = "#";
 
       let pos = 0;
@@ -279,10 +282,26 @@ const hashTagValidation = () => {
     hashOnlyFirst();
   };
 
+  const hashTagDuplicates = () => {
+    const data = generateValues();
+    const arr_len = data.length;
+    for (let i = 0; i < arr_len; i++) {
+      let val = data[i];
+      for (let j = i + 1; j < arr_len; j++) {
+        if (val === data[j]) {
+          hashTagInput.setCustomValidity(validationError[3]);
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
   hashTagInput.addEventListener("input", evt => {
     checkFirstSymbolHandler();
     notOnlyOneHashHandle();
     hashOnlyFirstHandle();
+    hashTagDuplicates();
   });
 };
 
