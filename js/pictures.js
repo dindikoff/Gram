@@ -26,7 +26,6 @@ const renderPicture = picture => {
 
   const closeOverlayByEsc = evt => {
     if (evt.keyCode === 27) {
-      console.log("hi");
       hideBitPictureHandle(); // Close big picture
     }
   };
@@ -157,8 +156,12 @@ const showUploadOverlay = () => {
 };
 
 const hideUploadOverlay = () => {
-  imageUploadOverlay.classList.add("hidden");
-  document.removeEventListener("keydown", closeUploadOverlayByEsc);
+  if (document.activeElement.name === "hashtags" || document.activeElement.name === 'description') {
+    return;
+  } else {
+    imageUploadOverlay.classList.add("hidden");
+    document.removeEventListener("keydown", closeUploadOverlayByEsc);
+  }
 };
 
 uploadInput.addEventListener("change", showUploadOverlay);
@@ -322,11 +325,11 @@ const hashTagValidation = () => {
         hashTagInput.setCustomValidity(validationError[5]);
       }
     }
-  }
+  };
 
   const hashTagMaxNumberLetterHandler = () => {
     hashTagMaxNumberLetter();
-  }
+  };
   hashTagInput.addEventListener("input", evt => {
     checkFirstSymbolHandler();
     notOnlyOneHashHandle();
