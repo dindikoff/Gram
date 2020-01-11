@@ -291,7 +291,7 @@ const hashTagValidation = () => {
     for (let i = 0; i < arr_len; i++) {
       let val = data[i];
       for (let j = i + 1; j < arr_len; j++) {
-        if (val === data[j]) {
+        if (val === data[j] || val.toUpperCase() === data[j].toUpperCase()) {
           hashTagInput.setCustomValidity(validationError[3]);
           return true;
         }
