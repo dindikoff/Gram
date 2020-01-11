@@ -243,6 +243,14 @@ const dragEffectLine = () => {
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
+      
+      if (parseInt(effectLevel.style.left) >= 450) {
+        effectLevel.style.left = '450px';
+      }
+
+      if (parseInt(effectLevel.style.left) <= 0) {
+        effectLevel.style.left = '0px';
+      }
 
       effectLevel.style.left = (effectLevel.offsetLeft - shift.x) + 'px';
       effectDepth.style.width = (effectLevel.offsetLeft - shift.x) + 'px';
