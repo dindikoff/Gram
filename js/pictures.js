@@ -156,7 +156,10 @@ const showUploadOverlay = () => {
 };
 
 const hideUploadOverlay = () => {
-  if (document.activeElement.name === "hashtags" || document.activeElement.name === 'description') {
+  if (
+    document.activeElement.name === "hashtags" ||
+    document.activeElement.name === "description"
+  ) {
     return;
   } else {
     imageUploadOverlay.classList.add("hidden");
@@ -210,6 +213,53 @@ const useEffectHandler = () => {
 effectLists.addEventListener("change", useEffectHandler);
 
 // Effects end
+
+//DragAndDrop;
+
+const dragEffectLine = () => {
+  const effectLine = document.querySelector(".effect-level__line");
+  const effectLevel = document.querySelector(".effect-level__pin");
+  const effectDepth = document.querySelector(".effect-level__depth");
+
+  effectLevel.addEventListener("mousedown", evt => {
+    evt.preventDefault();
+
+    let startCords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    let dragged = false;
+
+    const onMouseMove = moveEvt => {
+      moveEvt.preventDefault();
+      dragged = true;
+
+      let shift = {
+        x: startCords.x - moveEvt.clientX
+      };
+
+      startCords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      effectLevel.style.left = (effectLevel.offsetLeft - shift.x) + 'px';
+      effectDepth.style.width = (effectLevel.offsetLeft - shift.x) + 'px';
+    };
+
+    const onMouseUp = upEvt => {
+      upEvt.preventDefault();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+  });
+};
+
+dragEffectLine();
 
 // Form Validation
 
