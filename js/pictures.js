@@ -217,17 +217,13 @@ effectLists.addEventListener("change", useEffectHandler);
 //DragAndDrop;
 
 const dragEffectLine = () => {
-  const effectLine = document.querySelector(".effect-level__line");
   const effectLevel = document.querySelector(".effect-level__pin");
   const effectDepth = document.querySelector(".effect-level__depth");
 
   effectLevel.addEventListener("mousedown", evt => {
     evt.preventDefault();
 
-    let startCords = {
-      x: evt.clientX,
-      y: evt.clientY
-    };
+    let startCord = { x: evt.clientX };
 
     let dragged = false;
 
@@ -236,30 +232,27 @@ const dragEffectLine = () => {
       dragged = true;
 
       let shift = {
-        x: startCords.x - moveEvt.clientX
+        x: startCord.x - moveEvt.clientX
       };
 
-      startCords = {
-        x: moveEvt.clientX,
-        y: moveEvt.clientY
-      };
-      
+      startCord = { x: moveEvt.clientX };
+
       if (parseInt(effectLevel.style.left) >= 450) {
-        effectLevel.style.left = '450px';
+        effectLevel.style.left = "450px";
       }
 
       if (parseInt(effectLevel.style.left) <= 0) {
-        effectLevel.style.left = '0px';
+        effectLevel.style.left = "0px";
       }
 
-      effectLevel.style.left = (effectLevel.offsetLeft - shift.x) + 'px';
-      effectDepth.style.width = (effectLevel.offsetLeft - shift.x) + 'px';
+      effectLevel.style.left = effectLevel.offsetLeft - shift.x + "px";
+      effectDepth.style.width = effectLevel.offsetLeft - shift.x + "px";
     };
 
     const onMouseUp = upEvt => {
       upEvt.preventDefault();
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
     };
 
     document.addEventListener("mousemove", onMouseMove);
