@@ -151,6 +151,8 @@ const closeUploadOverlayByEsc = evt => {
 };
 
 const showUploadOverlay = () => {
+  let effectLevel = document.querySelector('.effect-level');
+  effectLevel.style.display = 'none';
   imageUploadOverlay.classList.remove("hidden");
   document.addEventListener("keydown", closeUploadOverlayByEsc);
 };
