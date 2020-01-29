@@ -185,8 +185,12 @@ const filterRadioButtons = document.querySelectorAll(".effects__radio");
 const effectLists = document.querySelector(".effects__list");
 
 const useEffectHandler = () => {
+  let effectLevel = document.querySelector('.effect-level');
   if (filterRadioButtons[0].checked) {
     imageUploadPreview.className = "img-upload__preview";
+    effectLevel.style.display = 'none';
+  } else {
+    effectLevel.style.display = 'block';
   }
 
   if (filterRadioButtons[1].checked) {
