@@ -1,0 +1,38 @@
+"use strict";
+
+(function() {
+  // upload menu
+
+  const uploadInput = document.querySelector("#upload-file");
+  const imageUploadOverlay = document.querySelector(".img-upload__overlay");
+  const closeUploadOverlay = document.querySelector(".img-upload__cancel");
+
+  const closeUploadOverlayByEsc = evt => {
+    if (evt.keyCode == 27) {
+      hideUploadOverlay();
+    }
+  };
+
+  const showUploadOverlay = () => {
+    let effectLevel = document.querySelector(".effect-level");
+    effectLevel.style.display = "none";
+    imageUploadOverlay.classList.remove("hidden");
+    document.addEventListener("keydown", closeUploadOverlayByEsc);
+  };
+
+  const hideUploadOverlay = () => {
+    if (
+      document.activeElement.name === "hashtags" ||
+      document.activeElement.name === "description"
+    ) {
+      return;
+    } else {
+      imageUploadOverlay.classList.add("hidden");
+      document.removeEventListener("keydown", closeUploadOverlayByEsc);
+    }
+  };
+
+  uploadInput.addEventListener("change", showUploadOverlay);
+  closeUploadOverlay.addEventListener("click", hideUploadOverlay);
+  // end upload menu
+})();
