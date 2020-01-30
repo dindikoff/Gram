@@ -100,8 +100,6 @@
       if (data.length >= 6) {
         hashTagInput.setCustomValidity(validationError[4]);
       }
-
-      
     };
 
     const hashTagMaxNumberHandler = () => {
