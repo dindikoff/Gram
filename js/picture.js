@@ -23,7 +23,7 @@ const renderPicture = picture => {
   const bigPictureEl = document.querySelector(".big-picture");
   const showBigPictureHandler = evt => {
     bigPictureEl.classList.remove("hidden"); // Show big picture
-    bigPicture(imageList[evt.target.id]);
+    preview.bigPicture(imageList[evt.target.id]);
   };
 
   const closeOverlayByEsc = evt => {
