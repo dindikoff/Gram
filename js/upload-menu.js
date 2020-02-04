@@ -35,4 +35,15 @@
   uploadInput.addEventListener("change", showUploadOverlay);
   closeUploadOverlay.addEventListener("click", hideUploadOverlay);
   // end upload menu
+
+  const uploadForm = document.querySelector('.img-upload__form');
+  const uploadFormButton = document.querySelector('.img-upload__submit');
+  uploadForm.addEventListener('submit', function(evt) {
+    window.upload(new FormData(uploadForm), function() {
+      uploadFormButton.disabled = 'disabled';
+      hideUploadOverlay();
+    });
+    evt.preventDefault();
+  });
+
 })();
