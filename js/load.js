@@ -9,7 +9,17 @@
         xhr.open('GET', URL);
 
         xhr.addEventListener('load', function() {
-            onSuccess(xhr.response);
+            switch(xhr.status) {
+                case 200:
+                    onSuccess(xhr.response);
+                    break;
+                default:
+                    onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+            }
+        });
+
+        xhr.addEventListener('error', function() {
+            onError('Ошибка соединения!');
         });
 
         xhr.send();
