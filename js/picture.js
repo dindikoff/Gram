@@ -5,10 +5,12 @@
   .querySelector("#picture")
   .content.querySelector("a");
 
-const pictures = document.querySelector(".pictures");
+  const pictures = document.querySelector(".pictures");
 
 //Render Single image;
+
 const renderPicture = picture => {
+  
   const pictureElement = pictureTemplate.cloneNode(true);
   const pictureImageSrc = pictureElement.querySelector("img");
   const pictureComments = pictureElement.querySelector(".picture__comments");
@@ -17,13 +19,15 @@ const renderPicture = picture => {
   pictureImageSrc.src = picture.url;
   pictureComments.textContent = picture.comments.length;
   pictureLikes.textContent = picture.likes;
-  pictureImageSrc.id = picture.id;
+  pictureImageSrc.id = 2;
+  pictureImageSrc.alt = picture.description;
+
 
   // Show big picture Handlers
   const bigPictureEl = document.querySelector(".big-picture");
   const showBigPictureHandler = evt => {
     bigPictureEl.classList.remove("hidden"); // Show big picture
-    preview.bigPicture(imageList[evt.target.id]);
+    preview.bigPicture(picture);
   };
 
   const closeOverlayByEsc = evt => {
@@ -52,15 +56,26 @@ const renderPicture = picture => {
 
 // Show images on main page
 
+
+
 const showImages = pictureList => {
+  window.someArray = [];
   const fragment = document.createDocumentFragment();
   for (let i = 0; i < pictureList.length; i++) {
-    fragment.appendChild(renderPicture(pictureList[i]));
+    let pictureListSome = pictureList[i];
+    fragment.appendChild(renderPicture(pictureListSome));
+    someArray.push(pictureListSome);
   }
   pictures.appendChild(fragment);
+  
 };
 
-showImages(imageList);
+window.load(showImages);
+
+
+// showImages(imageList);
 
 // End show images on main page;
+
+
 })();

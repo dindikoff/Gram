@@ -3,14 +3,14 @@
 (function() {
     // Big picture;
 
-const bigPicture = pictureElement => {
+window.bigPicture = pictureElement => {
     const bigPicture = document.querySelector(".big-picture");
   
     const socialElement = document.querySelector(".social");
-    const bigPictureImage = bigPicture.querySelector(".big-picture__img img");
-  
+    const bigPictureImage = document.querySelector(".big-picture__img img");
+    bigPictureImage.src = 'photos/1.jpg'
     bigPictureImage.src = pictureElement.url; // Show Big Picture;
-  
+    console.log(pictureElement);
     //Generate Header;
     const getBigPictureHeader = () => {
       const bigPictureSocialHeaderPicture = document.querySelector(
@@ -25,7 +25,7 @@ const bigPicture = pictureElement => {
   
       bigPictureSocialHeaderPicture.src = "img/avatar-1.svg";
       bigPictureLikes.textContent = pictureElement.likes; // take likes from object
-      bigPictureSocialHeaderCaption.textContent = pictureElement.comments; //take picture comment from object
+      bigPictureSocialHeaderCaption.textContent = pictureElement.description; //take picture comment from object
     };
     getBigPictureHeader();
   
@@ -37,34 +37,41 @@ const bigPicture = pictureElement => {
       const bigPictureDownloadComments = bigPicture.querySelector(
         ".social__comments-loader"
       );
-      bigPictureDownloadComments.classList.add("visually-hidden");
-      bigPictureCommentsCount.classList.add("visually-hidden");
+      // bigPictureDownloadComments.classList.add("visually-hidden");
+      // bigPictureCommentsCount.classList.add("visually-hidden");
     };
     getBigPictureCommentsCountAndDownload();
   
     //Show Comments;
+    
     const getBigPictureSocialComments = () => {
+
       const socialComments = document.querySelector(".social__comments");
       socialComments.innerHTML = "";
   
       const fragment = document.createDocumentFragment();
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < pictureElement.comments.length; i++) {
         const socialCommentEl = document.createElement("li");
         socialCommentEl.classList.add("social__comment");
   
         const socialCommentImg = document.createElement("img");
-        socialCommentImg.src = `img/avatar-${i + 1}.svg`;
+        socialCommentImg.src = pictureElement.comments[i].avatar;
         socialCommentImg.classList.add("social__picture");
         socialCommentImg.width = "35";
         socialCommentImg.height = "35";
   
         const socialCommentText = document.createElement("p");
         socialCommentText.classList.add("social__text");
-        socialCommentText.textContent = COMMENTS[i];
+        socialCommentText.textContent = pictureElement.comments[i].message;
   
         fragment.appendChild(socialCommentEl);
         socialCommentEl.appendChild(socialCommentImg);
         socialCommentEl.appendChild(socialCommentText);
+
+        while (pictureElement.comments.length < 3) {
+          console.log('hi');
+        }
+        
       }
       socialComments.appendChild(fragment);
     };
