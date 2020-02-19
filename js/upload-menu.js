@@ -7,8 +7,10 @@
   const imageUploadOverlay = document.querySelector(".img-upload__overlay");
   const closeUploadOverlay = document.querySelector(".img-upload__cancel");
 
+  const ESC_KEY_CODE = 27;
+
   const closeUploadOverlayByEsc = evt => {
-    if (evt.keyCode == 27) {
+    if (evt.keyCode == ESC_KEY_CODE) {
       hideUploadOverlay();
     }
   };
@@ -36,14 +38,13 @@
   closeUploadOverlay.addEventListener("click", hideUploadOverlay);
   // end upload menu
 
-  const uploadForm = document.querySelector('.img-upload__form');
-  const uploadFormButton = document.querySelector('.img-upload__submit');
-  uploadForm.addEventListener('submit', function(evt) {
+  const uploadForm = document.querySelector(".img-upload__form");
+  const uploadFormButton = document.querySelector(".img-upload__submit");
+  uploadForm.addEventListener("submit", function(evt) {
     window.upload(new FormData(uploadForm), function() {
-      uploadFormButton.disabled = 'disabled';
+      uploadFormButton.disabled = "disabled";
       hideUploadOverlay();
     });
     evt.preventDefault();
   });
-
 })();
