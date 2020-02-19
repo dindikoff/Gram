@@ -79,50 +79,6 @@
     filterChecked["fobos"] ? filterApply('phobos') : '';
     filterChecked["heat"] ? filterApply('heat') : '';
 
-
-    
-    // filterChecked["none"] ? filterApply("none") : nonFilter();
-
-    // if (filterChecked.none) {
-      
-      
-      
-    // } else {
-    //   effectLevel.style.display = "block";
-    // }
-
-    // if (filterChecked.chrome) {
-    //   imageUploadPreview.className =
-    //     "img-upload__preview" + " " + effectsList[0];
-    //
-    // }
-
-    // if (filterChecked.sepia) {
-    //   imageUploadPreview.className =
-    //     "img-upload__preview" + " " + effectsList[1];
-
-    //   const sepiaEffect = document.querySelector(".effects__preview--sepia");
-    //   sepiaEffect.style = "filter: sepia(20%)";
-    //   changeEffectLevel("sepia");
-    // }
-
-    // if (filterChecked.marvin) {
-    //   imageUploadPreview.className =
-    //     "img-upload__preview" + " " + effectsList[2];
-    //   changeEffectLevel("marvin");
-    // }
-
-    // if (filterChecked.fobos) {
-    //   imageUploadPreview.className =
-    //     "img-upload__preview" + " " + effectsList[3];
-    //   changeEffectLevel("phobos");
-    // }
-
-    // if (filterChecked.heat) {
-    //   imageUploadPreview.className =
-    //     "img-upload__preview" + " " + effectsList[4];
-    //   changeEffectLevel("heat");
-    // }
   };
 
   effectLists.addEventListener("change", useEffectHandler);
