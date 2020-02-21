@@ -1,65 +1,80 @@
 "use strict";
 
 (function() {
-  const pictureTemplate = document
-    .querySelector("#picture")
-    .content.querySelector("a");
+  window.pictures = [];
+  let likesNumber;
+  let commentsNumber;
 
-  const pictures = document.querySelector(".pictures");
+  const updateFilter = function() {
+    window.render(pictures);
+  };
 
-  //Render Single image;
+  const showPopular = () => {
+    window.render(popularFilter(pictures, "likes"));
+  };
 
-  const renderPicture = picture => {
-    const pictureElement = pictureTemplate.cloneNode(true);
-    const pictureImageSrc = pictureElement.querySelector("img");
-    const pictureComments = pictureElement.querySelector(".picture__comments");
-    const pictureLikes = pictureElement.querySelector(".picture__likes");
+  const showDiscuss = () => {
+    window.render(popularFilter(pictures, "comment"));
+  };
 
-    pictureImageSrc.src = picture.url;
-    pictureComments.textContent = picture.comments.length;
-    pictureLikes.textContent = picture.likes;
-    pictureImageSrc.id = 2;
-    pictureImageSrc.alt = picture.description;
-
-    // Show big picture Handlers
-    const bigPictureEl = document.querySelector(".big-picture");
-    const showBigPictureHandler = evt => {
-      bigPictureEl.classList.remove("hidden"); // Show big picture
-      preview.bigPicture(picture);
-    };
-
-    const closeOverlayByEsc = evt => {
-      if (evt.keyCode === 27) {
-        hideBitPictureHandle(); // Close big picture
+  const popularFilter = (array, type) => {
+    let newSortedList = array.slice();
+    let sortedList = newSortedList.sort((left, right) => {
+      if (type === "likes") {
+        return right.likes - left.likes;
+      } else if (type === "comment") {
+        return right.comments.length - left.comments.length;
       }
-    };
-
-    const bigPictureClose = document.querySelector(".big-picture__cancel");
-
-    const hideBitPictureHandle = evt => {
-      bigPictureEl.classList.add("hidden"); // Close big picture
-      document.removeEventListener("keydown", closeOverlayByEsc);
-    };
-
-    pictureImageSrc.addEventListener("click", evt => {
-      showBigPictureHandler(evt);
-      document.addEventListener("keydown", closeOverlayByEsc);
     });
-
-    bigPictureClose.addEventListener("click", hideBitPictureHandle);
-
-    return pictureElement;
+    return sortedList;
   };
-  // End Render Single Image;
 
-  // Show images on main page
-  const successHandler = picture => {
-    const fragment = document.createDocumentFragment();
-    for (let i = 0; i < picture.length; i++) {
-      fragment.appendChild(renderPicture(picture[i]));
+  
+
+  const debounce = (cb) => {
+    let isTimeOut;
+    if (isTimeOut) {
+      window.clearTimeout(isTimeOut);
     }
-    pictures.appendChild(fragment);
+
+    isTimeOut = setTimeout(() => {
+      cb();
+      
+      
+    }, 500);
   };
+
+  const successHandler = picture => {
+    pictures = picture;
+    updateFilter();
+  };
+
+  const filterPopularButton = document.querySelector("#filter-popular");
+  const filterNewButton = document.querySelector("#filter-new");
+  const filterMoreDiscuss = document.querySelector("#filter-discussed");
+  const removeAllActiveClasses = () => {
+    filterPopularButton.classList.remove("img-filters__button--active");
+    filterNewButton.classList.remove("img-filters__button--active");
+    filterMoreDiscuss.classList.remove("img-filters__button--active");
+  };
+
+  filterPopularButton.addEventListener("click", evt => {
+    removeAllActiveClasses();
+    filterPopularButton.classList.add("img-filters__button--active");
+    debounce(showPopular);
+  });
+
+  filterNewButton.addEventListener("click", evt => {
+    removeAllActiveClasses();
+    filterNewButton.classList.add("img-filters__button--active");
+    debounce(updateFilter);
+  });
+
+  filterMoreDiscuss.addEventListener("click", evt => {
+    removeAllActiveClasses();
+    filterMoreDiscuss.classList.add("img-filters__button--active");
+    debounce(showDiscuss);
+  });
 
   const errorHandle = errorMessage => {
     let node = document.createElement("div");

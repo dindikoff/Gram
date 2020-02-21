@@ -40,10 +40,12 @@
 
   const uploadForm = document.querySelector(".img-upload__form");
   const uploadFormButton = document.querySelector(".img-upload__submit");
+  const imageFilters = document.querySelector('.img-filters');
   uploadForm.addEventListener("submit", function(evt) {
     window.upload(new FormData(uploadForm), function() {
       uploadFormButton.disabled = "disabled";
       hideUploadOverlay();
+      imageFilters.classList.remove('img-filters--inactive');
     });
     evt.preventDefault();
   });
