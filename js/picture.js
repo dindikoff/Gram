@@ -5,70 +5,76 @@
   let likesNumber;
   let commentsNumber;
 
-  const updateFilter = function () {
+  const updateFilter = function() {
     window.render(pictures);
   };
 
   const showPopular = () => {
-    window.render(popularFilter(pictures, 'likes'));
-  }
+    window.render(popularFilter(pictures, "likes"));
+  };
 
   const showDiscuss = () => {
-    window.render(popularFilter(pictures, 'comment'));
-  }
+    window.render(popularFilter(pictures, "comment"));
+  };
 
   const popularFilter = (array, type) => {
     let newSortedList = array.slice();
     let sortedList = newSortedList.sort((left, right) => {
-      if (type === 'likes') {
+      if (type === "likes") {
         return right.likes - left.likes;
-      } else if (type === 'comment') {
+      } else if (type === "comment") {
         return right.comments.length - left.comments.length;
       }
     });
     return sortedList;
-  }
+  };
 
   
 
-  //buttons popular
+  const debounce = (cb) => {
+    let isTimeOut;
+    if (isTimeOut) {
+      window.clearTimeout(isTimeOut);
+    }
 
-  
+    isTimeOut = setTimeout(() => {
+      cb();
+      
+      
+    }, 500);
+  };
 
-  // Show images on main page
   const successHandler = picture => {
     pictures = picture;
     updateFilter();
   };
 
-  const filterPopularButton = document.querySelector('#filter-popular');
-  const filterNewButton = document.querySelector('#filter-new');
-  const filterMoreDiscuss = document.querySelector('#filter-discussed');
+  const filterPopularButton = document.querySelector("#filter-popular");
+  const filterNewButton = document.querySelector("#filter-new");
+  const filterMoreDiscuss = document.querySelector("#filter-discussed");
   const removeAllActiveClasses = () => {
-    filterPopularButton.classList.remove('img-filters__button--active');
-    filterNewButton.classList.remove('img-filters__button--active');
-    filterMoreDiscuss.classList.remove('img-filters__button--active');
+    filterPopularButton.classList.remove("img-filters__button--active");
+    filterNewButton.classList.remove("img-filters__button--active");
+    filterMoreDiscuss.classList.remove("img-filters__button--active");
   };
 
-  filterPopularButton.addEventListener('click', (evt) => {
-    showPopular();
+  filterPopularButton.addEventListener("click", evt => {
     removeAllActiveClasses();
-    filterPopularButton.classList.add('img-filters__button--active');
+    filterPopularButton.classList.add("img-filters__button--active");
+    debounce(showPopular);
   });
 
-  
-  filterNewButton.addEventListener('click', (evt) => {
-    updateFilter();
+  filterNewButton.addEventListener("click", evt => {
     removeAllActiveClasses();
-    filterNewButton.classList.add('img-filters__button--active');
+    filterNewButton.classList.add("img-filters__button--active");
+    debounce(updateFilter);
   });
 
-  filterMoreDiscuss.addEventListener('click', (evt) => {
-    showDiscuss();
+  filterMoreDiscuss.addEventListener("click", evt => {
     removeAllActiveClasses();
-    filterMoreDiscuss.classList.add('img-filters__button--active');
+    filterMoreDiscuss.classList.add("img-filters__button--active");
+    debounce(showDiscuss);
   });
-
 
   const errorHandle = errorMessage => {
     let node = document.createElement("div");
