@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/render.js" defer></script>
   <script src="js/upload.js" defer></script>
   <script src="js/load.js" defer></script>
   <script src="js/upload-menu.js" defer></script>
@@ -29,9 +30,9 @@
     <section class="img-filters  img-filters--inactive  container">
       <h2 class="img-filters__title  visually-hidden">Фильтр фотографий</h2>
       <form class="img-filters__form" action="index.html" method="get" autocomplete="off">
-        <button type=button class="img-filters__button  img-filters__button--active"
+        <button type=button class="img-filters__button"
           id="filter-popular">Популярные</button>
-        <button type=button class="img-filters__button" id="filter-new">Новые</button>
+        <button type=button class="img-filters__button img-filters__button--active" id="filter-new">Новые</button>
         <button type=button class="img-filters__button" id="filter-discussed">Обсуждаемые</button>
       </form>
     </section>
